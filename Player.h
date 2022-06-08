@@ -22,7 +22,7 @@ class Player
 {
 
 public:
-	void Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection);
+	void Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection,WorldTransform worldTransform);
 	void Update();
 	void Draw();
 	void Move();

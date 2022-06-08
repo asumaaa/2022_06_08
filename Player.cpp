@@ -1,37 +1,41 @@
 #include "Player.h"
 #define PI 3.1415
 
-void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection)
+void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection, WorldTransform worldTransform)
 {
 	assert(model);
 	this->model_ = model;
 	this->textureHandle_ = textureHandle;
 	this->viewProjection_ = viewProjection;
+	this->worldTransform_ = worldTransform;
 
 	//シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 	debugText_ = DebugText::GetInstance();
 
-	//ワールド変換初期化
-	worldTransform_.Initialize();
 }
 
 void Player::Update()
 {
-	Move();
-	Rotation();
+	worldTransform_.Initialize();
 
-	Attack();
+	worldTransformMove(&worldTransform_, worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
+	worldTransformRole(&worldTransform_, worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z);
+
+	/*Move();
+	Rotation();*/
+
+	/*Attack();
 	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		bullet->Update();
-	}
+	}*/
 
 	worldTransform_.TransferMatrix();
 
-	debugText_->SetPos(50, 150);
+	/*debugText_->SetPos(50, 150);
 	debugText_->Printf("%f.%f.%f", worldTransform_.matWorld_.m[0][2],
-		worldTransform_.matWorld_.m[2][2], worldTransform_.matWorld_.m[1][2]);
+		worldTransform_.matWorld_.m[2][2], worldTransform_.matWorld_.m[1][2]);*/
 }
 
 void Player::Draw()
@@ -77,7 +81,6 @@ void Player::Move()
 	worldTransform_.matWorld_.m[3][1] = max(worldTransform_.matWorld_.m[3][1], -kMoveLimitY);
 	worldTransform_.matWorld_.m[3][1] = min(worldTransform_.matWorld_.m[3][1], +kMoveLimitY);
 
-	debugText_->SetPos(50, 150);
 	worldTransformMove(&worldTransform_, move.x, move.y, move.z);
 }
 

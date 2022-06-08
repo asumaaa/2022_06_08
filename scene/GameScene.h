@@ -51,7 +51,7 @@ private: // メンバ変数
 	DebugText* debugText_ = nullptr;
 
 	//自キャラ
-	Player* player_ = nullptr;
+	Player* player_[100];
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
@@ -63,6 +63,23 @@ private: // メンバ変数
 	DebugCamera* debugCamera_ = nullptr;
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
+	//ワールドトランスフォーム
+	WorldTransform worldTransforms_[100];
+
+	//視点の移動ベクトル
+	Vector3 moveEye = { 0,0,0 };
+	//視点移動の速さ
+	const float kEyeSpeed = 0.2f;
+
+	//注点の移動ベクトル
+	Vector3 moveTraget = { 0,0,0 };
+	//注点移動の速さ
+	const float kTragetSpeed = 0.2f;
+
+	//カメラの上方向の角度
+	float viewAngle = 0.0f;
+	//上方向の回転速度
+	const float kUpRotSpeed = 0.05f;
 
 	/// <summary>
 	/// ゲームシーン用

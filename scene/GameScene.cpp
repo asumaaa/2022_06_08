@@ -3,6 +3,7 @@
 #include <cassert>
 #include "math.h"
 #include "Matrix4.h"
+#include <random>
 
 #define PI 3.1415
 
@@ -10,7 +11,10 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene()
 {
-	delete player_;
+	for (int i = 0; i < 100; i++)
+	{
+		delete player_[i];
+	}
 	delete model_;
 	delete debugCamera_;
 }
@@ -29,19 +33,93 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
+
+	//カメラ視点座標を設定
+	viewProjection_.eye = { 0,0,-50 };
+	//カメラ注視点座標を設定
+	viewProjection_.target = { 0,0,0 };
+	//カメラ上方向ベクトルを設定（右上45度指定）
+	viewProjection_.up = { 0.0f,0.0f,0.0f };
 	//ビュープロジェクション
 	viewProjection_.Initialize();
 
+	//乱数シード生成器
+	std::random_device seed_gen;
+	//メルセンヌツイスターの乱数エンジン
+	std::mt19937_64 engine(seed_gen());
+	//乱数範囲の指定
+	std::uniform_real_distribution<float>xTransRange(-10, 10);
+	std::uniform_real_distribution<float>yTransRange(-10, 10);
+	std::uniform_real_distribution<float>zTransRange(-10, 10);
+	std::uniform_real_distribution<float>xRotateRange(0, 2*PI);
+	std::uniform_real_distribution<float>yRotateRange(0, 2*PI);
+	std::uniform_real_distribution<float>zRotateRange(0, 2*PI);
+
 	//自キャラの生成
-	player_ = new Player();
+	for (int i = 0; i < 100; i++)
+	{
+		player_[i] = new Player();
+	}
+
 	//自キャラの初期化
-	player_->Initialize(model_, textureHandle_, viewProjection_);
+	for (int i = 0; i < 100; i++)
+	{
+		worldTransforms_[i].Initialize();
+		worldTransforms_[i].translation_ = { xTransRange(engine),yTransRange(engine) ,zTransRange(engine) };
+		worldTransforms_[i].rotation_ = { xRotateRange(engine),yRotateRange(engine) ,zRotateRange(engine) };
+
+		player_[i]->Initialize(model_, textureHandle_, viewProjection_, worldTransforms_[i]);
+	}
 }
 
 void GameScene::Update()
 {
+	if (input_->PushKey(DIK_W))
+	{
+		moveEye = { 0,0,kEyeSpeed };
+	}
+	else if (input_->PushKey(DIK_S))
+	{
+		moveEye = { 0,0,-kEyeSpeed };
+	}
+	else
+	{
+		moveEye = { 0,0,0 };
+	}
+
+	if (input_->PushKey(DIK_LEFT))
+	{
+		moveTraget = { -kTragetSpeed,0,0 };
+	}
+	else if (input_->PushKey(DIK_RIGHT))
+	{
+		moveTraget = { kTragetSpeed,0,0 };
+	}
+	else
+	{
+		moveTraget = { 0,0,0 };
+	}
+
+	if (input_->PushKey(DIK_SPACE))
+	{
+		viewAngle += kUpRotSpeed;
+		//2πを超えたら0に戻す
+		viewAngle = fmodf(viewAngle, PI * 2.0f);
+	}
+
+	//視点移動（ベクトルの加算）
+	viewProjection_.eye += moveEye;
+	viewProjection_.target += moveTraget;
+	viewProjection_.up = { cosf(viewAngle),sinf(viewAngle),0.0f };
+
+	//行列の再計算
+	viewProjection_.UpdateMatrix();
+
 	//自キャラの更新
-	player_->Update();
+	for (int i = 0; i < 100; i++)
+	{
+		player_[i]->Update();
+	}
 	debugCamera_->Update();
 }
 
@@ -74,7 +152,10 @@ void GameScene::Draw() {
 
 	//3Dモデル描画
 	//自キャラの描画
-	player_->Draw();
+	for (int i = 0; i < 100; i++)
+	{
+		player_[i]->Draw();
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
