@@ -16,9 +16,6 @@
     <Filter Include="シェーダー ファイル">
       <UniqueIdentifier>{718c7f4c-fc51-40ad-a221-b9456a7a1a3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\3d">
-      <UniqueIdentifier>{8ccef709-d514-43f7-ad35-629a9edd5057}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\2d">
       <UniqueIdentifier>{96135050-efba-425e-a9fe-8881bd7caad8}</UniqueIdentifier>
     </Filter>
@@ -49,6 +46,9 @@
     <Filter Include="ヘッダー ファイル\math">
       <UniqueIdentifier>{647f4977-924a-4954-923f-5619e5afc9a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\3d">
+      <UniqueIdentifier>{8ccef709-d514-43f7-ad35-629a9edd5057}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,37 +78,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\WorldTransform.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\CircleShadow.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\DebugCamera.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\DirectionalLight.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\LightGroup.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\Material.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\Model.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\Mesh.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\PointLight.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\SpotLight.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="2d\DebugText.h">
       <Filter>ヘッダー ファイル\2d</Filter>
@@ -153,10 +153,10 @@
       <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
     <ClInclude Include="3d\AxisIndicator.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="3d\PrimitiveDrawer.h">
-      <Filter>ヘッダー ファイル\3d</Filter>
+      <Filter>ソース ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>ヘッダー ファイル</Filter>

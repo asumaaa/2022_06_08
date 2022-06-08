@@ -4,6 +4,8 @@
 #include "math.h"
 #include "Matrix4.h"
 #include <random>
+#include <DirectXMath.h>
+using namespace DirectX;
 
 #define PI 3.1415
 
@@ -34,12 +36,8 @@ void GameScene::Initialize() {
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
-	//カメラ視点座標を設定
-	viewProjection_.eye = { 0,0,-50 };
-	//カメラ注視点座標を設定
-	viewProjection_.target = { 0,0,0 };
-	//カメラ上方向ベクトルを設定（右上45度指定）
-	viewProjection_.up = { 0.0f,0.0f,0.0f };
+	//カメラ垂直方向視野角を設定
+	viewProjection_.fovAngleY = XMConvertToRadians(10.0f);
 	//ビュープロジェクション
 	viewProjection_.Initialize();
 
@@ -74,43 +72,49 @@ void GameScene::Initialize() {
 
 void GameScene::Update()
 {
-	if (input_->PushKey(DIK_W))
-	{
-		moveEye = { 0,0,kEyeSpeed };
-	}
-	else if (input_->PushKey(DIK_S))
-	{
-		moveEye = { 0,0,-kEyeSpeed };
-	}
-	else
-	{
-		moveEye = { 0,0,0 };
-	}
+	//if (input_->PushKey(DIK_W))
+	//{
+	//	moveEye = { 0,0,kEyeSpeed };
+	//}
+	//else if (input_->PushKey(DIK_S))
+	//{
+	//	moveEye = { 0,0,-kEyeSpeed };
+	//}
+	//else
+	//{
+	//	moveEye = { 0,0,0 };
+	//}
 
-	if (input_->PushKey(DIK_LEFT))
-	{
-		moveTraget = { -kTragetSpeed,0,0 };
-	}
-	else if (input_->PushKey(DIK_RIGHT))
-	{
-		moveTraget = { kTragetSpeed,0,0 };
-	}
-	else
-	{
-		moveTraget = { 0,0,0 };
-	}
+	//if (input_->PushKey(DIK_LEFT))
+	//{
+	//	moveTraget = { -kTragetSpeed,0,0 };
+	//}
+	//else if (input_->PushKey(DIK_RIGHT))
+	//{
+	//	moveTraget = { kTragetSpeed,0,0 };
+	//}
+	//else
+	//{
+	//	moveTraget = { 0,0,0 };
+	//}
 
-	if (input_->PushKey(DIK_SPACE))
-	{
-		viewAngle += kUpRotSpeed;
-		//2πを超えたら0に戻す
-		viewAngle = fmodf(viewAngle, PI * 2.0f);
-	}
+	//if (input_->PushKey(DIK_SPACE))
+	//{
+	//	viewAngle += kUpRotSpeed;
+	//	//2πを超えたら0に戻す
+	//	viewAngle = fmodf(viewAngle, PI * 2.0f);
+	//}
 
-	//視点移動（ベクトルの加算）
-	viewProjection_.eye += moveEye;
-	viewProjection_.target += moveTraget;
-	viewProjection_.up = { cosf(viewAngle),sinf(viewAngle),0.0f };
+	////視点移動（ベクトルの加算）
+	//viewProjection_.eye += moveEye;
+	//viewProjection_.target += moveTraget;
+	//viewProjection_.up = { cosf(viewAngle),sinf(viewAngle),0.0f };
+
+	//上キーで視野角が広がる
+	if (input_->PushKey(DIK_UP))
+	{
+		viewProjection_.fovAngleY += 0.1;
+	}
 
 	//行列の再計算
 	viewProjection_.UpdateMatrix();
