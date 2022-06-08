@@ -37,7 +37,12 @@ void GameScene::Initialize() {
 	debugCamera_ = new DebugCamera(1280, 720);
 
 	//カメラ垂直方向視野角を設定
-	viewProjection_.fovAngleY = XMConvertToRadians(10.0f);
+	/*viewProjection_.fovAngleY = XMConvertToRadians(0.0f);*/
+	//アスペクト比を設定
+	/*viewProjection_.aspectRatio = 1.0f;*/
+	//ニアクリップ距離を設定
+	viewProjection_.nearZ = 52.0f;
+	viewProjection_.farZ = 53.0f;
 	//ビュープロジェクション
 	viewProjection_.Initialize();
 
@@ -111,9 +116,24 @@ void GameScene::Update()
 	//viewProjection_.up = { cosf(viewAngle),sinf(viewAngle),0.0f };
 
 	//上キーで視野角が広がる
+	/*if (input_->PushKey(DIK_UP))
+	{
+		viewProjection_.fovAngleY += 0.01;
+		viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, PI);
+	}
+	else if (input_->PushKey(DIK_DOWN))
+	{
+		viewProjection_.fovAngleY -= 0.01;
+		viewProjection_.fovAngleY = max(viewProjection_.fovAngleY, 0.01f);
+	}*/
+
 	if (input_->PushKey(DIK_UP))
 	{
-		viewProjection_.fovAngleY += 0.1;
+		viewProjection_.nearZ += 0.03;
+	}
+	else if (input_->PushKey(DIK_DOWN))
+	{
+		viewProjection_.nearZ -= 0.03;
 	}
 
 	//行列の再計算
