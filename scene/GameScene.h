@@ -51,7 +51,7 @@ private: // メンバ変数
 	DebugText* debugText_ = nullptr;
 
 	//自キャラ
-	Player* player_[100];
+	Player* player_[7];
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;

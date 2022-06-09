@@ -12,18 +12,17 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection vie
 	//シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 	debugText_ = DebugText::GetInstance();
-
+	worldTransform_.Initialize();
 }
 
 void Player::Update()
 {
 	worldTransform_.Initialize();
 
-	worldTransformMove(&worldTransform_, worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
-	worldTransformRole(&worldTransform_, worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z);
+	/*worldTransformMove(&worldTransform_, worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);*/
 
-	/*Move();
-	Rotation();*/
+	/*Move();*/
+	/*Rotation();*/
 
 	/*Attack();
 	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
@@ -53,24 +52,26 @@ void Player::Move()
 {
 	if (input_->PushKey(DIK_A))
 	{
-		move = { -speed,0,0 };
+		move = {-speed,0.0f,0.0f};
 	}
 	else if (input_->PushKey(DIK_D))
 	{
-		move = { speed,0,0 };
+		move = { speed,0.0f,0.0f };
 	}
 	else if (input_->PushKey(DIK_W))
 	{
-		move = { 0,speed,0 };
+		move = { 0.0f,speed,0.0f };
 	}
 	else if (input_->PushKey(DIK_S))
 	{
-		move = { 0,-speed,0 };
+		move = { 0.0f,-speed,0.0f };
 	}
 	else
 	{
-		move = { 0,0,0 };
+		move = { 0.0f,0.0f,0.0f };
 	}
+
+	worldTransform_.translation_ += move;
 
 	//移動限界座標
 	const float kMoveLimitX = 36;
@@ -81,7 +82,7 @@ void Player::Move()
 	worldTransform_.matWorld_.m[3][1] = max(worldTransform_.matWorld_.m[3][1], -kMoveLimitY);
 	worldTransform_.matWorld_.m[3][1] = min(worldTransform_.matWorld_.m[3][1], +kMoveLimitY);
 
-	worldTransformMove(&worldTransform_, move.x, move.y, move.z);
+	/*worldTransformMove(&worldTransform_, move.x, move.y, move.z);*/
 }
 
 void Player::Rotation()
