@@ -1,10 +1,11 @@
 #include "PlayerBullet.h"
 
-void PlayerBullet::Initialize(Model* model, const Vector3& position)
+void PlayerBullet::Initialize(Model* model, const Vector3& position, const Vector3& velocity)
 {
 	assert(model);
 
 	model_ = model;
+	velocity_ = velocity;
 	//テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("black.png");
 
@@ -16,6 +17,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position)
 
 void PlayerBullet::Update()
 {
+	worldTransform_.translation_ += velocity_;
 	/*worldTransformScale(&worldTransform_, scale.x, scale.y, scale.z);
 	worldTransformTransrationSet(&worldTransform_, worldTransform_.translation_.x, worldTransform_.translation_.y,
 		worldTransform_.translation_.z);

@@ -104,10 +104,13 @@ void Player::Attack()
 	//’e‚ð¶¬‚µA‰Šú‰»
 	if (input_->TriggerKey(DIK_SPACE))
 	{
+		const float kBulletSpeed = 1.0f;
+		Vector3 velocity(0, 0, kBulletSpeed);
+
 		std::unique_ptr<PlayerBullet>newBullet = std::make_unique<PlayerBullet>();
 		position = { worldTransform_.matWorld_.m[3][0],worldTransform_.matWorld_.m[3][1]
 			,worldTransform_.matWorld_.m[3][2] };
-		newBullet->Initialize(model_, position);
+		newBullet->Initialize(model_, position, velocity);
 
 		//‹…‚ð“o˜^‚·‚é
 		bullets_.push_back(std::move(newBullet));

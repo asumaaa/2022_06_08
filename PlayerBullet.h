@@ -18,7 +18,7 @@
 class PlayerBullet
 {
 public:
-	void Initialize(Model* model, const Vector3& position);
+	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 private:
@@ -31,6 +31,8 @@ private:
 	Vector3 move = { 0,0,0 };
 	Vector3 rotation = { 0,0,0 };
 	Vector3 scale = { 1,1,1 };
+
+	Vector3 velocity_;
 
 };
 
