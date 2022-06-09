@@ -21,3 +21,6 @@ void worldTransformTransrationSet(WorldTransform* worldTransform_, float x, floa
 
 //matWorld_Ç…ÉZÉbÉg
 void worldTransformRoleSet(WorldTransform* worldTransform_, float x, float y, float z);
+
+//WorldTransformÇÃçáê¨
+void worldTransformUpdate(WorldTransform* worldTransform_);
