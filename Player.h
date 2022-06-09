@@ -26,6 +26,7 @@ public:
 	void Update();
 	void Draw();
 	void Move();
+	void ParentMove(Player *p);
 	void Rotation();
 
 	void Attack();

@@ -17,9 +17,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection vie
 
 void Player::Update()
 {
-	worldTransform_.Initialize();
-
-	/*worldTransformMove(&worldTransform_, worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);*/
+	/*Move();*/
 
 	/*Move();*/
 	/*Rotation();*/
@@ -71,8 +69,6 @@ void Player::Move()
 		move = { 0.0f,0.0f,0.0f };
 	}
 
-	worldTransform_.translation_ += move;
-
 	//ˆÚ“®ŒÀŠEÀ•W
 	const float kMoveLimitX = 36;
 	const float kMoveLimitY = 20;
@@ -82,7 +78,13 @@ void Player::Move()
 	worldTransform_.matWorld_.m[3][1] = max(worldTransform_.matWorld_.m[3][1], -kMoveLimitY);
 	worldTransform_.matWorld_.m[3][1] = min(worldTransform_.matWorld_.m[3][1], +kMoveLimitY);
 
-	/*worldTransformMove(&worldTransform_, move.x, move.y, move.z);*/
+	worldTransformMove(&worldTransform_, move.x, move.y, move.z);
+}
+
+void Player::ParentMove(Player *p)
+{
+	worldTransformMove(&worldTransform_, p->worldTransform_.matWorld_.m[3][0] + worldTransform_.translation_.x, 
+		p->worldTransform_.matWorld_.m[3][1] + worldTransform_.translation_.y, move.z);
 }
 
 void Player::Rotation()

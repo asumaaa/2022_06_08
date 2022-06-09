@@ -16,6 +16,9 @@ void worldTransformScale(WorldTransform* worldTransform_, float x, float y, floa
 
 void worldTransformMove(WorldTransform* worldTransform_, float x, float y, float z)
 {
+	worldTransform_->matWorld_.m[3][0] = 0;
+	worldTransform_->matWorld_.m[3][1] = 0;
+	worldTransform_->matWorld_.m[3][2] = 0;
 	worldTransform_->translation_ = { x,y,z };
 	Matrix4 matTrans(
 		1.0f, 0.0f, 0.0f, 0,
@@ -53,6 +56,45 @@ void worldTransformRole(WorldTransform* worldTransform_, float x, float y, float
 	matRot *= matRotX;
 	matRot *= matRotY;
 	worldTransform_->matWorld_ *= matRot;
+}
+
+void worldTransformUpdate(WorldTransform* worldTransform_)
+{
+	worldTransform_->matWorld_ = {
+		worldTransform_->scale_.x, 0.0f, 0.0f, 0.0f,
+		0.0f, worldTransform_->scale_.y, 0.0f, 0.0f,
+		0.0f, 0.0f, worldTransform_->scale_.z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+	Matrix4 matTrans(
+		1.0f, 0.0f, 0.0f, 0,
+		0.0f, 1.0f, 0.0f, 0,
+		0.0f, 0.0f, 1.0f, 0,
+		worldTransform_->translation_.x, worldTransform_->translation_.y, worldTransform_->translation_.z, 1.0f
+	);
+	Matrix4 matRotX(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, cos(worldTransform_->rotation_.x), sin(worldTransform_->rotation_.x), 0.0f,
+		0.0f, -sin(worldTransform_->rotation_.x), cos(worldTransform_->rotation_.x), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+	Matrix4 matRotY(
+		cos(worldTransform_->rotation_.y), 0.0f, -sin(worldTransform_->rotation_.y), 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		sin(worldTransform_->rotation_.y), 0.0f, cos(worldTransform_->rotation_.y), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+	Matrix4 matRotZ(
+		cos(worldTransform_->rotation_.z), sin(worldTransform_->rotation_.z), 0.0f, 0.0f,
+		-sin(worldTransform_->rotation_.z), cos(worldTransform_->rotation_.z), 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	worldTransform_->matWorld_ *= matTrans;
+	worldTransform_->matWorld_ *= matRotZ;
+	worldTransform_->matWorld_ *= matRotX;
+	worldTransform_->matWorld_ *= matRotY;
 }
 
 void worldTransformScaleSet(WorldTransform* worldTransform_, float x, float y, float z)

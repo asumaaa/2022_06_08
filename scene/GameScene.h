@@ -51,7 +51,7 @@ private: // メンバ変数
 	DebugText* debugText_ = nullptr;
 
 	//自キャラ
-	Player* player_[7];
+	/*Player* player_[7];*/
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
@@ -64,7 +64,7 @@ private: // メンバ変数
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 	//ワールドトランスフォーム
-	WorldTransform worldTransforms_[100];
+	WorldTransform worldTransforms_[9];
 
 	//視点の移動ベクトル
 	Vector3 moveEye = { 0,0,0 };
@@ -80,6 +80,22 @@ private: // メンバ変数
 	float viewAngle = 0.0f;
 	//上方向の回転速度
 	const float kUpRotSpeed = 0.05f;
+
+	public:
+		enum PartId
+		{
+			kRoot,
+			kSpine,
+			kChest,
+			kHead,
+			kArmL,
+			kArmR,
+			kHip,
+			kLegL,
+			kLegR,
+
+			kNumPartId
+		};
 
 	/// <summary>
 	/// ゲームシーン用

@@ -13,10 +13,10 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene()
 {
-	for (int i = 0; i < 7; i++)
+	/*for (int i = 0; i < 7; i++)
 	{
 		delete player_[i];
-	}
+	}*/
 	delete model_;
 	delete debugCamera_;
 }
@@ -38,35 +38,110 @@ void GameScene::Initialize() {
 	//ビュープロジェクション
 	viewProjection_.Initialize();
 
-	//親
-	worldTransforms_[0].Initialize();
-	//子
-	worldTransforms_[1].Initialize();
-	worldTransforms_[1].translation_ = { 0.0f,0.0f,0.0f };
-	worldTransforms_[1].parent_ = &worldTransforms_[0];
-
-	//自キャラの生成
-	for (int i = 0; i < 7; i++)
+	//初期化
+	for (int i = 0; i < 9; i++)
 	{
-		player_[i] = new Player();
+		worldTransforms_[i].Initialize();
 	}
 
-	//自キャラの初期化
-	for (int i = 0; i < 7; i++)
-	{
-		player_[i]->Initialize(model_, textureHandle_, viewProjection_, worldTransforms_[i]);
-	}
+	//脊椎
+	worldTransforms_[PartId::kSpine].parent_ = &worldTransforms_[PartId::kRoot];
+	worldTransforms_[PartId::kSpine].translation_ = {0,4.5f,0};
+
+	//上半身
+	//胸
+	worldTransforms_[PartId::kChest].parent_ = &worldTransforms_[PartId::kSpine];
+	worldTransforms_[PartId::kChest].translation_ = { 0,4.5f,0 };
+	//頭
+	worldTransforms_[PartId::kHead].parent_ = &worldTransforms_[PartId::kChest];
+	worldTransforms_[PartId::kHead].translation_ = { 0,4.5f,0 };
+	//左腕
+	worldTransforms_[PartId::kArmL].parent_ = &worldTransforms_[PartId::kChest];
+	worldTransforms_[PartId::kArmL].translation_ = { 4.5f,0,0 };
+	//右腕
+	worldTransforms_[PartId::kArmR].parent_ = &worldTransforms_[PartId::kChest];
+	worldTransforms_[PartId::kArmR].translation_ = { -4.5f,0,0 };
+
+	//下半身
+	//尻
+	worldTransforms_[PartId::kHip].parent_ = &worldTransforms_[PartId::kSpine];
+	worldTransforms_[PartId::kHip].translation_ = { 0,0,0 };
+	//左足
+	worldTransforms_[PartId::kLegL].parent_ = &worldTransforms_[PartId::kHip];
+	worldTransforms_[PartId::kLegL].translation_ = { 4.5f,-4.5f,0 };
+	//右足
+	worldTransforms_[PartId::kLegR].parent_ = &worldTransforms_[PartId::kHip];
+	worldTransforms_[PartId::kLegR].translation_ = { -4.5f,-4.5f,0 };
+
 }
 
 void GameScene::Update()
 {
-	player_[0]->Move();
-	worldTransforms_[1].translation_ = { 5.0f,4.5f,0.0f };
-	//自キャラの更新
-	for (int i = 0; i < 7; i++)
+	Vector3 move = { 0,0,0 };
+	Vector3 roleU = { 0,0,0 };
+	Vector3 roleD = { 0,0,0 };
+
+	if (input_->PushKey(DIK_A))
 	{
-		player_[i]->Update();
+		move = { -0.2f,0.0f,0.0f };
 	}
+	else if (input_->PushKey(DIK_D))
+	{
+		move = { 0.2f,0.0f,0.0f };
+	}
+	else if (input_->PushKey(DIK_W))
+	{
+		move = { 0.0f,0.2f,0.0f };
+	}
+	else if (input_->PushKey(DIK_S))
+	{
+		move = { 0.0f,-0.2f,0.0f };
+	}
+	else
+	{
+		move = { 0.0f,0.0f,0.0f };
+	}
+
+	if (input_->PushKey(DIK_U))
+	{
+		roleU = { 0.0f,0.02f,0.0f };
+	}
+	else if (input_->PushKey(DIK_I))
+	{
+		roleU = { 0.0f,-0.02f,0.0f };
+	}
+	else
+	{
+		roleU = { 0.0f,0.0f,0.0f };
+	}
+
+	if (input_->PushKey(DIK_J))
+	{
+		roleD = { 0.0f,0.02f,0.0f };
+	}
+	else if (input_->PushKey(DIK_K))
+	{
+		roleD = { 0.0f,-0.02f,0.0f };
+	}
+	else
+	{
+		roleD = { 0.0f,0.0f,0.0f };
+	}
+
+	worldTransforms_[kRoot].translation_ += move;
+	worldTransformUpdate(&worldTransforms_[0]);
+	worldTransforms_[0].TransferMatrix();
+
+	worldTransforms_[kChest].rotation_ += roleU;
+	worldTransforms_[kHip].rotation_ += roleD;
+
+	for (int i = 1; i < 9; i++)
+	{
+		worldTransformUpdate(&worldTransforms_[i]);
+		worldTransforms_[i].matWorld_ *= worldTransforms_[i].parent_->matWorld_;
+		worldTransforms_[i].TransferMatrix();
+	}
+
 	debugCamera_->Update();
 }
 
@@ -99,9 +174,9 @@ void GameScene::Draw() {
 
 	//3Dモデル描画
 	//自キャラの描画
-	for (int i = 0; i < 7; i++)
+	for (int i = 2; i < 9; i++)
 	{
-		player_[i]->Draw();
+		model_->Draw(worldTransforms_[i], viewProjection_, textureHandle_);
 	}
 
 	// 3Dオブジェクト描画後処理
