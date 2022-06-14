@@ -18,17 +18,24 @@
 class PlayerBullet
 {
 public:
-	void Initialize(Model* model, const Vector3& position);
+	void Initialize(Model* model, const Vector3& position,const Vector3& velocity);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
+	bool IsDead()const { return isDead_; }
 private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
 
-	Vector3 translation = { 0,0,0 };
-	Vector3 rotation = { 0,0,0 };
-	Vector3 scale = { 1,1,1 };
+	//速度のベクトル
+	Vector3 velocity_;
+	
+	//弾の寿命
+	static const int32_t kLifeTime = 60 * 3;
 
+	//デスタイマー
+	int32_t deathTimer_ = kLifeTime;
+	//デスフラグ
+	bool isDead_ = false;
 };
 

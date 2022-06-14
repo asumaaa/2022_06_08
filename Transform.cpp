@@ -2,34 +2,38 @@
 #include <cassert>
 #include "math.h"
 
-void worldTransformScale(WorldTransform* worldTransform_, float x, float y, float z)
+void worldTransformScale(Vector3* vector_, WorldTransform* worldTransform_)
 {
-	worldTransform_->scale_ = { x,y,z };
+	Vector3 vec(vector_->x, vector_->y, vector_->z);
 	Matrix4 matScale(
 		worldTransform_->scale_.x, 0.0f, 0.0f, 0.0f,
 		0.0f, worldTransform_->scale_.y, 0.0f, 0.0f,
 		0.0f, 0.0f, worldTransform_->scale_.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
-	worldTransform_->matWorld_ *= matScale;
+
+	vector_->x = vec.x * matScale.m[0][0] + vec.y * matScale.m[0][1] + vec.z * matScale.m[0][2];
+	vector_->y = vec.x * matScale.m[1][0] + vec.y * matScale.m[1][1] + vec.z * matScale.m[1][2];
+	vector_->z = vec.x * matScale.m[2][0] + vec.y * matScale.m[2][1] + vec.z * matScale.m[2][2];
 }
 
-void worldTransformMove(WorldTransform* worldTransform_, float x, float y, float z)
+void worldTransformMove(Vector3* vector_, WorldTransform* worldTransform_)
 {
-	worldTransform_->translation_ = { x,y,z };
+	Vector3 vec(vector_->x, vector_->y, vector_->z);
 	Matrix4 matTrans(
 		1.0f, 0.0f, 0.0f, 0,
 		0.0f, 1.0f, 0.0f, 0,
 		0.0f, 0.0f, 1.0f, 0,
 		worldTransform_->translation_.x, worldTransform_->translation_.y, worldTransform_->translation_.z, 1.0f
 	);
-	worldTransform_->matWorld_ *= matTrans;
+	vector_->x = vec.x * matTrans.m[0][0] + vec.y * matTrans.m[0][1] + vec.z * matTrans.m[0][2] + matTrans.m[0][3];
+	vector_->y = vec.x * matTrans.m[1][0] + vec.y * matTrans.m[1][1] + vec.z * matTrans.m[1][2] + matTrans.m[1][3];
+	vector_->z = vec.x * matTrans.m[2][0] + vec.y * matTrans.m[2][1] + vec.z * matTrans.m[2][2] + matTrans.m[2][3];
 }
 
-void worldTransformRole(WorldTransform* worldTransform_, float x, float y, float z)
+void worldTransformRoll(Vector3* vector_, WorldTransform* worldTransform_)
 {
-	worldTransform_->rotation_ = { x,y,z };
-	Matrix4 matRot;
+	Vector3 vec(vector_->x, vector_->y, vector_->z);
 	Matrix4 matRotX(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, cos(worldTransform_->rotation_.x), sin(worldTransform_->rotation_.x), 0.0f,
@@ -49,10 +53,18 @@ void worldTransformRole(WorldTransform* worldTransform_, float x, float y, float
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	matRot = matRotZ;
-	matRot *= matRotX;
-	matRot *= matRotY;
-	worldTransform_->matWorld_ *= matRot;
+	matRotZ *= matRotX;
+	matRotZ *= matRotY;
+	vector_->x = vec.x * matRotZ.m[0][0] + vec.y * matRotZ.m[0][1] + vec.z * matRotZ.m[0][2];
+	vector_->y = vec.x * matRotZ.m[1][0] + vec.y * matRotZ.m[1][1] + vec.z * matRotZ.m[1][2];
+	vector_->z = vec.x * matRotZ.m[2][0] + vec.y * matRotZ.m[2][1] + vec.z * matRotZ.m[2][2];
+}
+
+void vecWorldTransform(Vector3* vector_, WorldTransform* worldTransform_)
+{
+	worldTransformScale(vector_, worldTransform_);
+	worldTransformRoll(vector_, worldTransform_);
+	worldTransformMove(vector_, worldTransform_);
 }
 
 void worldTransformScaleSet(WorldTransform* worldTransform_, float x, float y, float z)
