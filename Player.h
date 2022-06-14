@@ -38,8 +38,9 @@ private:
 	ViewProjection viewProjection_;
 
 	float speed = 0.2;
+	float rollSpeed = 0.02;
 	Vector3 move;
-	Vector3 role ;
+	Vector3 roll;
 
 	//’e
 	Vector3 position;

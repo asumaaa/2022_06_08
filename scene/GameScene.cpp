@@ -44,7 +44,7 @@ void GameScene::Update()
 {
 	player_->Update();
 
-	debugCamera_->Update();
+	/*debugCamera_->Update();*/
 }
 
 void GameScene::Draw() {

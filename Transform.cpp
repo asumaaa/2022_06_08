@@ -16,9 +16,6 @@ void worldTransformScale(WorldTransform* worldTransform_, float x, float y, floa
 
 void worldTransformMove(WorldTransform* worldTransform_, float x, float y, float z)
 {
-	worldTransform_->matWorld_.m[3][0] = 0;
-	worldTransform_->matWorld_.m[3][1] = 0;
-	worldTransform_->matWorld_.m[3][2] = 0;
 	worldTransform_->translation_ = { x,y,z };
 	Matrix4 matTrans(
 		1.0f, 0.0f, 0.0f, 0,
@@ -58,6 +55,25 @@ void worldTransformRole(WorldTransform* worldTransform_, float x, float y, float
 	worldTransform_->matWorld_ *= matRot;
 }
 
+void worldTransformScaleSet(WorldTransform* worldTransform_, float x, float y, float z)
+{
+	worldTransform_->matWorld_.m[0][0] = x;
+	worldTransform_->matWorld_.m[0][1] = y;
+	worldTransform_->matWorld_.m[0][2] = z;
+}
+
+void worldTransformTransrationSet(WorldTransform* worldTransform_, float x, float y, float z)
+{
+	worldTransform_->matWorld_.m[3][0] = x;
+	worldTransform_->matWorld_.m[3][1] = y;
+	worldTransform_->matWorld_.m[3][2] = z;
+}
+
+void worldTransformRoleSet(WorldTransform* worldTransform_, float x, float y, float z)
+{
+	worldTransform_->rotation_ = { x,y,z };
+}
+
 void worldTransformUpdate(WorldTransform* worldTransform_)
 {
 	worldTransform_->matWorld_ = {
@@ -90,28 +106,10 @@ void worldTransformUpdate(WorldTransform* worldTransform_)
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
-
-	worldTransform_->matWorld_ *= matTrans;
 	worldTransform_->matWorld_ *= matRotZ;
 	worldTransform_->matWorld_ *= matRotX;
 	worldTransform_->matWorld_ *= matRotY;
-}
+	worldTransform_->matWorld_ *= matTrans;
 
-void worldTransformScaleSet(WorldTransform* worldTransform_, float x, float y, float z)
-{
-	worldTransform_->matWorld_.m[0][0] = x;
-	worldTransform_->matWorld_.m[0][1] = y;
-	worldTransform_->matWorld_.m[0][2] = z;
-}
-
-void worldTransformTransrationSet(WorldTransform* worldTransform_, float x, float y, float z)
-{
-	worldTransform_->matWorld_.m[3][0] = x;
-	worldTransform_->matWorld_.m[3][1] = y;
-	worldTransform_->matWorld_.m[3][2] = z;
-}
-
-void worldTransformRoleSet(WorldTransform* worldTransform_, float x, float y, float z)
-{
-	worldTransform_->rotation_ = { x,y,z };
+	worldTransform_->TransferMatrix();
 }

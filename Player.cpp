@@ -16,10 +16,9 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection vie
 
 void Player::Update()
 {
-	Move();
 
-	/*Move();*/
-	/*Rotation();*/
+	Move();
+	Rotation();
 
 	/*Attack();
 	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
@@ -28,7 +27,11 @@ void Player::Update()
 	}*/
 	worldTransformUpdate(&worldTransform_);
 
-	worldTransform_.TransferMatrix();
+	/*worldTransform_.TransferMatrix();*/
+
+	debugText_->SetPos(50, 150);
+	debugText_->Printf("%f.%f", worldTransform_.translation_.x,
+		worldTransform_.translation_.y);
 }
 
 void Player::Draw()
@@ -71,8 +74,8 @@ void Player::Move()
 
 	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitX);
 	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kMoveLimitX);
-	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitY);
-	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kMoveLimitY);
+	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kMoveLimitY);
+	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLimitY);
 
 	worldTransform_.translation_ += move;
 }
@@ -80,17 +83,17 @@ void Player::Rotation()
 {
 	if (input_->PushKey(DIK_Z))
 	{
-		role = { 0.0f,0.2f,0.0f };
+		roll = { 0.0f,rollSpeed,0.0f };
 	}
 	else if (input_->PushKey(DIK_X))
 	{
-		role = { 0.0f,-0.2f,0.0f };
+		roll = { 0.0f,-rollSpeed,0.0f };
 	}
 	else
 	{
-		role = { 0.0f,0.0f,0.0f };
+		roll = { 0.0f,0.0f,0.0f };
 	}
-	worldTransform_.rotation_ += role;
+	worldTransform_.rotation_ += roll;
 
 }
 
