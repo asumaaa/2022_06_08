@@ -26,7 +26,7 @@ private:
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
 
-	Vector3 move = { 0,0,0 };
+	Vector3 translation = { 0,0,0 };
 	Vector3 rotation = { 0,0,0 };
 	Vector3 scale = { 1,1,1 };
 

@@ -11,7 +11,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position)
 	//ワールド座標初期化
 	worldTransform_.Initialize();
 	//引数で受け取った初期座標をセット
-	worldTransformTransrationSet(&worldTransform_, position.x, position.y, position.z);
+	worldTransform_.translation_ = position;
 }
 
 void PlayerBullet::Update()
@@ -21,7 +21,7 @@ void PlayerBullet::Update()
 		worldTransform_.translation_.z);
 	worldTransformRole(&worldTransform_, rotation.x, rotation.y, rotation.z);*/
 
-	worldTransform_.TransferMatrix();
+	worldTransformUpdate(&worldTransform_);
 
 }
 

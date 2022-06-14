@@ -25,9 +25,13 @@ public:
 	void Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection);
 	void Update();
 	void Draw();
+
+	//ˆÚ“®
 	void Move();
+	//‰ñ“]
 	void Rotation();
 
+	//UŒ‚
 	void Attack();
 private:
 	Input* input_ = nullptr;
@@ -37,13 +41,15 @@ private:
 	uint32_t textureHandle_;
 	ViewProjection viewProjection_;
 
+	//ˆÚ“®
 	float speed = 0.2;
-	float rollSpeed = 0.02;
 	Vector3 move;
+	//‰ñ“]
+	float rollSpeed = 0.02;
 	Vector3 roll;
 
 	//’e
-	Vector3 position;
+	PlayerBullet* bullet_ = nullptr;
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 };
 
