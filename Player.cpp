@@ -1,13 +1,12 @@
 #include "Player.h"
 #define PI 3.1415
 
-void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection, WorldTransform worldTransform)
+void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection)
 {
 	assert(model);
 	this->model_ = model;
 	this->textureHandle_ = textureHandle;
 	this->viewProjection_ = viewProjection;
-	this->worldTransform_ = worldTransform;
 
 	//シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
@@ -17,7 +16,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection vie
 
 void Player::Update()
 {
-	/*Move();*/
+	Move();
 
 	/*Move();*/
 	/*Rotation();*/
@@ -27,12 +26,9 @@ void Player::Update()
 	{
 		bullet->Update();
 	}*/
+	worldTransformUpdate(&worldTransform_);
 
 	worldTransform_.TransferMatrix();
-
-	/*debugText_->SetPos(50, 150);
-	debugText_->Printf("%f.%f.%f", worldTransform_.matWorld_.m[0][2],
-		worldTransform_.matWorld_.m[2][2], worldTransform_.matWorld_.m[1][2]);*/
 }
 
 void Player::Draw()
@@ -73,35 +69,28 @@ void Player::Move()
 	const float kMoveLimitX = 36;
 	const float kMoveLimitY = 20;
 
-	worldTransform_.matWorld_.m[3][0] = max(worldTransform_.matWorld_.m[3][0], -kMoveLimitX);
-	worldTransform_.matWorld_.m[3][0] = min(worldTransform_.matWorld_.m[3][0], +kMoveLimitX);
-	worldTransform_.matWorld_.m[3][1] = max(worldTransform_.matWorld_.m[3][1], -kMoveLimitY);
-	worldTransform_.matWorld_.m[3][1] = min(worldTransform_.matWorld_.m[3][1], +kMoveLimitY);
+	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitX);
+	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kMoveLimitX);
+	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitY);
+	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kMoveLimitY);
 
-	worldTransformMove(&worldTransform_, move.x, move.y, move.z);
+	worldTransform_.translation_ += move;
 }
-
-void Player::ParentMove(Player *p)
-{
-	worldTransformMove(&worldTransform_, p->worldTransform_.matWorld_.m[3][0] + worldTransform_.translation_.x, 
-		p->worldTransform_.matWorld_.m[3][1] + worldTransform_.translation_.y, move.z);
-}
-
 void Player::Rotation()
 {
 	if (input_->PushKey(DIK_Z))
 	{
-		role = 0.02;
+		role = { 0.0f,0.2f,0.0f };
 	}
 	else if (input_->PushKey(DIK_X))
 	{
-		role = -0.02;
+		role = { 0.0f,-0.2f,0.0f };
 	}
 	else
 	{
-		role = 0;
+		role = { 0.0f,0.0f,0.0f };
 	}
-	worldTransformRole(&worldTransform_, 0, role, 0);
+	worldTransform_.rotation_ += role;
 
 }
 

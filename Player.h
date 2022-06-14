@@ -22,11 +22,10 @@ class Player
 {
 
 public:
-	void Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection,WorldTransform worldTransform);
+	void Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection);
 	void Update();
 	void Draw();
 	void Move();
-	void ParentMove(Player *p);
 	void Rotation();
 
 	void Attack();
@@ -40,7 +39,7 @@ private:
 
 	float speed = 0.2;
 	Vector3 move;
-	float role = 0;
+	Vector3 role ;
 
 	//’e
 	Vector3 position;
