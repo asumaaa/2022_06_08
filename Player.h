@@ -15,7 +15,7 @@
 #include "DebugText.h"
 #include "Input.h"
 #include "PlayerBullet.h"
-#include "memory.h"
+#include "memory"
 #include "list"
 
 class Player
@@ -49,7 +49,6 @@ private:
 	Vector3 roll;
 
 	//’e
-	PlayerBullet* bullet_ = nullptr;
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 };
 
