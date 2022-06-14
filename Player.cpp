@@ -27,8 +27,6 @@ void Player::Update()
 	}*/
 	worldTransformUpdate(&worldTransform_);
 
-	/*worldTransform_.TransferMatrix();*/
-
 	debugText_->SetPos(50, 150);
 	debugText_->Printf("%f.%f", worldTransform_.translation_.x,
 		worldTransform_.translation_.y);

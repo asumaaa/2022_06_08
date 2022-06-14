@@ -22,8 +22,6 @@ public:
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 private:
-	/*Input* input_ = nullptr;
-	DebugText* debugText_ = nullptr;*/
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;

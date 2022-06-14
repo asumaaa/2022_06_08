@@ -15,7 +15,6 @@ GameScene::~GameScene()
 {
 	delete player_;
 	delete model_;
-	delete debugCamera_;
 }
 
 void GameScene::Initialize() {
@@ -30,8 +29,7 @@ void GameScene::Initialize() {
 
 	//3Dモデルの生成
 	model_ = Model::Create();
-	//デバッグカメラの生成
-	debugCamera_ = new DebugCamera(1280, 720);
+
 	//ビュープロジェクション
 	viewProjection_.Initialize();
 
@@ -43,8 +41,6 @@ void GameScene::Initialize() {
 void GameScene::Update()
 {
 	player_->Update();
-
-	/*debugCamera_->Update();*/
 }
 
 void GameScene::Draw() {
