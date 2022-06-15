@@ -27,14 +27,30 @@ void Enemy::Draw()
 
 void Enemy::Move()
 {
-	if (worldTransform_.translation_.x <= -36)
+	switch (phase_)
 	{
-		speed = -speed;
+	case Phase::Approach:
+	default:
+		MoveApproach();
+		break;
+	case Phase::Leave:
+		Leave();
+		break;
 	}
-	if (worldTransform_.translation_.x >= 36)
+	worldTransform_.translation_ += move;
+}
+
+void Enemy::MoveApproach()
+{
+	move = { speed,0,0 };
+	//‹K’è‚ÌˆÊ’u‚É’B‚µ‚½‚ç—£’E
+	if (worldTransform_.translation_.x > 20.0f)
 	{
-		speed = -speed;
+		phase_ = Phase::Leave;
 	}
-	Vector3 Move = { speed,0,0 };
-	worldTransform_.translation_ += Move;
+}
+
+void Enemy::Leave()
+{
+	move = { 0,speed,0 };
 }

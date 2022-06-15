@@ -22,11 +22,27 @@ public:
 	void Update();
 	void Draw();
 	void Move();
+
+	//フェーズごとの移動関数
+	void MoveApproach();
+	void Leave();
 private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
 	ViewProjection viewProjection_;
+
+	//敵の座標に加算するベクトル
+	Vector3 move;
+
+	//行動フェーズ
+	enum class Phase
+	{
+		Approach,
+		Leave
+	};
+
+	Phase phase_ = Phase::Approach;
 
 	//移動速度
 	float speed = 0.2;
