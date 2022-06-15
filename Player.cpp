@@ -112,7 +112,7 @@ void Player::Attack()
 		Vector3 velocity(0, 0, kBulletSpeed);
 
 		//速度ベクトルを自機の向きに併せて回転させる
-		vecWorldTransform(&velocity, &worldTransform_);
+		worldTransformRoll(&velocity, &worldTransform_);
 
 		//弾を生成し初期化
 		std::unique_ptr<PlayerBullet>newBullet = std::make_unique<PlayerBullet>();
