@@ -29,5 +29,5 @@ private:
 	ViewProjection viewProjection_;
 
 	//ˆÚ“®‘¬“x
-	float speed;
+	float speed = 0.2;
 };

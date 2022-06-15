@@ -11,6 +11,7 @@ void Enemy::Initialize(Model* model,  ViewProjection viewProjection)
 
 	//ワールドトランスフォーム初期化
 	worldTransform_.Initialize();
+	worldTransform_.translation_ = { 0,10,0 };
 }
 
 void Enemy::Update()
@@ -26,6 +27,14 @@ void Enemy::Draw()
 
 void Enemy::Move()
 {
-	Vector3 Move(0,speed,0);
+	if (worldTransform_.translation_.x <= -36)
+	{
+		speed = -speed;
+	}
+	if (worldTransform_.translation_.x >= 36)
+	{
+		speed = -speed;
+	}
+	Vector3 Move = { speed,0,0 };
 	worldTransform_.translation_ += Move;
 }
