@@ -49,9 +49,6 @@
     <Filter Include="ソース ファイル\3d">
       <UniqueIdentifier>{8ccef709-d514-43f7-ad35-629a9edd5057}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\ヘッダーファイル">
-      <UniqueIdentifier>{b52cfe80-1d29-4318-baf5-ae8b3080f9f5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,17 +161,17 @@
     <ClInclude Include="Transform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerBullet.h">
-      <Filter>ヘッダー ファイル\ヘッダーファイル</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="scene\GameScene.h">
-      <Filter>ヘッダー ファイル\ヘッダーファイル</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
