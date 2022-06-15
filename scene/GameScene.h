@@ -55,7 +55,7 @@ private: // メンバ変数
 	Player* player_;
 
 	//敵
-	Enemy* enemy_;
+	/*Enemy* enemy_;*/
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
