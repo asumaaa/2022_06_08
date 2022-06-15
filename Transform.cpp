@@ -29,7 +29,7 @@ void worldTransformMove(Vector3* vector_, WorldTransform* worldTransform_)
 	);
 	vector_->x = vec.x * matTrans.m[0][0] + vec.y * matTrans.m[1][0] + vec.z * matTrans.m[2][0] + matTrans.m[3][0];
 	vector_->y = vec.x * matTrans.m[0][1] + vec.y * matTrans.m[1][1] + vec.z * matTrans.m[2][1] + matTrans.m[3][1];
-	vector_->z = vec.x * matTrans.m[0][2] + vec.y * matTrans.m[1][1] + vec.z * matTrans.m[2][2] + matTrans.m[3][2];
+	vector_->z = vec.x * matTrans.m[0][2] + vec.y * matTrans.m[1][2] + vec.z * matTrans.m[2][2] + matTrans.m[3][2];
 }
 
 void worldTransformRoll(Vector3* vector_, WorldTransform* worldTransform_)
