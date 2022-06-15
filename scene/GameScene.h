@@ -12,6 +12,7 @@
 #include "DebugCamera.h"
 #include "Transform.h"
 #include "Player.h"
+#include "Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -52,6 +53,9 @@ private: // メンバ変数
 
 	//自キャラ
 	Player* player_;
+
+	//敵
+	Enemy* enemy_;
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;

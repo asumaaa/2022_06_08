@@ -18,9 +18,16 @@
 class Enemy
 {
 public:
-	void Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection);
+	void Initialize(Model* model,  ViewProjection viewProjection);
 	void Update();
 	void Draw();
+	void Move();
 private:
+	WorldTransform worldTransform_;
+	Model* model_ = nullptr;
+	uint32_t textureHandle_;
+	ViewProjection viewProjection_;
 
+	//ˆÚ“®‘¬“x
+	float speed;
 };
