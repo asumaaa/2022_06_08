@@ -25,9 +25,6 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 
-	//ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("Mario.jpg");
-
 	//3Dモデルの生成
 	model_ = Model::Create();
 
@@ -36,7 +33,7 @@ void GameScene::Initialize() {
 
 	//初期化
 	player_ = new Player();
-	player_->Initialize(model_, textureHandle_, viewProjection_);
+	player_->Initialize(model_,viewProjection_);
 	enemy_ = new Enemy();
 	enemy_->Initialize(model_,viewProjection_);
 }

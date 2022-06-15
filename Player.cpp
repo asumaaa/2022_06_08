@@ -1,12 +1,13 @@
 #include "Player.h"
 #define PI 3.1415
 
-void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection viewProjection)
+void Player::Initialize(Model* model, ViewProjection viewProjection)
 {
 	assert(model);
 	this->model_ = model;
-	this->textureHandle_ = textureHandle;
 	this->viewProjection_ = viewProjection;
+
+	textureHandle_ = TextureManager::Load("Mario.jpg");
 
 	//シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();

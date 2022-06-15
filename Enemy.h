@@ -14,6 +14,7 @@
 #include "Matrix4.h"
 #include "DebugText.h"
 #include "Input.h"
+#include "EnemyBullet.h"
 
 class Enemy
 {
@@ -21,11 +22,15 @@ public:
 	void Initialize(Model* model,  ViewProjection viewProjection);
 	void Update();
 	void Draw();
+	
+	//移動をまとめた関数
 	void Move();
-
 	//フェーズごとの移動関数
 	void MoveApproach();
 	void Leave();
+
+	//攻撃の関数
+	void Attack();
 private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
@@ -41,9 +46,13 @@ private:
 		Approach,
 		Leave
 	};
-
 	Phase phase_ = Phase::Approach;
 
 	//移動速度
 	float speed = 0.2;
+
+	//弾
+	std::list<std::unique_ptr<EnemyBullet>> bullets_;
+	float kBulletSpeed = 1.0f;
+	float bulletTimer = 0;
 };

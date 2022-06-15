@@ -54,3 +54,22 @@ void Enemy::Leave()
 {
 	move = { 0,speed,0 };
 }
+
+void Enemy::Attack()
+{
+	//’e‚ğ¶¬‚µA‰Šú‰»
+	if (bulletTimer % 60 == 0)
+	{
+		Vector3 velocity(0, 0, kBulletSpeed);
+
+		//‘¬“xƒxƒNƒgƒ‹‚ğ©‹@‚ÌŒü‚«‚É•¹‚¹‚Ä‰ñ“]‚³‚¹‚é
+		worldTransformRoll(&velocity, &worldTransform_);
+
+		//’e‚ğ¶¬‚µ‰Šú‰»
+		std::unique_ptr<EnemyBullet>newBullet = std::make_unique<EnemyBullet>();
+		newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+
+		//’e‚ğ“o˜^‚·‚é
+		bullets_.push_back(std::move(newBullet));
+	}
+}
