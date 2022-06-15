@@ -19,13 +19,12 @@ void worldTransformScale(Vector3* vector_, WorldTransform* worldTransform_)
 
 void worldTransformMove(Vector3* vector_, WorldTransform* worldTransform_)
 {
-
 	Vector3 vec(vector_->x, vector_->y, vector_->z);
 	Matrix4 matTrans(
-	1.0f, 0.0f, 0.0f, 0,
-	0.0f, 1.0f, 0.0f, 0,
-	0.0f, 0.0f, 1.0f, 0,
-	worldTransform_->translation_.x, worldTransform_->translation_.y, worldTransform_->translation_.z, 1.0f
+		1.0f, 0.0f, 0.0f, 0,
+		0.0f, 1.0f, 0.0f, 0,
+		0.0f, 0.0f, 1.0f, 0,
+		worldTransform_->translation_.x, worldTransform_->translation_.y, worldTransform_->translation_.z, 1.0f
 	);
 	vector_->x = vec.x * matTrans.m[0][0] + vec.y * matTrans.m[1][0] + vec.z * matTrans.m[2][0] + matTrans.m[3][0];
 	vector_->y = vec.x * matTrans.m[0][1] + vec.y * matTrans.m[1][1] + vec.z * matTrans.m[2][1] + matTrans.m[3][1];
