@@ -31,14 +31,18 @@ public:
 
 	//攻撃の関数
 	void Attack();
+	void AttackUpdate();
 private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
 	ViewProjection viewProjection_;
+	Input* input_ = nullptr;
+	DebugText* debugText_ = nullptr;
 
 	//敵の座標に加算するベクトル
 	Vector3 move;
+	Vector3 roll;
 
 	//行動フェーズ
 	enum class Phase
@@ -53,6 +57,14 @@ private:
 
 	//弾
 	std::list<std::unique_ptr<EnemyBullet>> bullets_;
-	float kBulletSpeed = 1.0f;
-	float bulletTimer = 0;
+	float kBulletSpeed = 1.5f;
+
+	//発射タイマー
+	int32_t bulletTimer = 0;
+
+public:
+	//発射間隔
+	static const int kAttackInterval = 60;
+	//接近フェーズ初期化
+	void ApproachInitialize();
 };

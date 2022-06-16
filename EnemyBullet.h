@@ -23,9 +23,13 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 	bool IsDead()const { return isDead_; }
 private:
+
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
+
+	//速度のベクトル
+	Vector3 velocity_;
 
 	//弾の寿命
 	static const int32_t kLifeTime = 60 * 3;
@@ -34,9 +38,6 @@ private:
 	int32_t deathTimer_ = kLifeTime;
 	//デスフラグ
 	bool isDead_ = false;
-
-	//弾の速度のベクトル
-	Vector3 velocity_;
 
 };
 

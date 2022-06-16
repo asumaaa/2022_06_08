@@ -25,18 +25,6 @@ void Player::Update()
 
 	Attack();
 
-	//弾更新
-	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
-	{
-		bullet->Update();
-	}
-
-	//デスフラグの立った弾を削除
-	bullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet)
-		{
-			return bullet->IsDead();
-		});
-
 	worldTransformUpdate(&worldTransform_);
 
 	debugText_->SetPos(50, 150);
@@ -124,4 +112,16 @@ void Player::Attack()
 		//弾を登録する
 		bullets_.push_back(std::move(newBullet));
 	}
+
+	//弾更新
+	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
+	{
+		bullet->Update();
+	}
+
+	//デスフラグの立った弾を削除
+	bullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet)
+		{
+			return bullet->IsDead();
+		});
 }
