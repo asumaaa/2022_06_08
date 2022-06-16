@@ -67,23 +67,30 @@ void vecWorldTransform(Vector3* vector_, WorldTransform* worldTransform_)
 	worldTransformMove(vector_, worldTransform_);
 }
 
-void worldTransformScaleSet(WorldTransform* worldTransform_, float x, float y, float z)
+float length(WorldTransform worldTransform1, WorldTransform worldTransform2)
 {
-	worldTransform_->matWorld_.m[0][0] = x;
-	worldTransform_->matWorld_.m[0][1] = y;
-	worldTransform_->matWorld_.m[0][2] = z;
+	float x = worldTransform1.translation_.x - worldTransform2.translation_.x;
+	float y = worldTransform1.translation_.y - worldTransform2.translation_.y;
+	float z = worldTransform1.translation_.z - worldTransform2.translation_.z;
+	return sqrt(x * x + y * y + z * z);
 }
 
-void worldTransformTransrationSet(WorldTransform* worldTransform_, float x, float y, float z)
+float VecGetX(WorldTransform worldTransform1, WorldTransform worldTransform2)
 {
-	worldTransform_->matWorld_.m[3][0] = x;
-	worldTransform_->matWorld_.m[3][1] = y;
-	worldTransform_->matWorld_.m[3][2] = z;
+	float x = worldTransform1.translation_.x - worldTransform2.translation_.x;
+	return x/length(worldTransform1,worldTransform2);
 }
 
-void worldTransformRoleSet(WorldTransform* worldTransform_, float x, float y, float z)
+float VecGetY(WorldTransform worldTransform1, WorldTransform worldTransform2)
 {
-	worldTransform_->rotation_ = { x,y,z };
+	float y = worldTransform1.translation_.y - worldTransform2.translation_.y;
+	return y / length(worldTransform1, worldTransform2);
+}
+
+float VecGetZ(WorldTransform worldTransform1, WorldTransform worldTransform2)
+{
+	float z = worldTransform1.translation_.z - worldTransform2.translation_.z;
+	return z / length(worldTransform1, worldTransform2);
 }
 
 void worldTransformUpdate(WorldTransform* worldTransform_)

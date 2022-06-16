@@ -84,6 +84,8 @@ void Enemy::Leave()
 
 void Enemy::Attack()
 {
+	assert(player_);
+
 	Vector3 velocity(0, 0, kBulletSpeed);
 
 	//速度ベクトルを自機の向きに併せて回転させる

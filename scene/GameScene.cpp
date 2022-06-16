@@ -36,6 +36,9 @@ void GameScene::Initialize() {
 	player_->Initialize(model_,viewProjection_);
 	enemy_ = new Enemy();
 	enemy_->Initialize(model_,viewProjection_);
+
+	//敵に自キャラのアドレスを渡す
+	enemy_->SetPlayer(player_);
 }
 
 void GameScene::Update()

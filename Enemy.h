@@ -16,6 +16,8 @@
 #include "Input.h"
 #include "EnemyBullet.h"
 
+class Player;
+
 class Enemy
 {
 public:
@@ -32,6 +34,9 @@ public:
 	//攻撃の関数
 	void Attack();
 	void AttackUpdate();
+
+	//プレイヤーのセッター
+	void SetPlayer(Player* player) { player_ = player; }
 private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
@@ -39,6 +44,9 @@ private:
 	ViewProjection viewProjection_;
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;
+
+	//プレイヤー
+	Player* player_ = nullptr;
 
 	//敵の座標に加算するベクトル
 	Vector3 move;
