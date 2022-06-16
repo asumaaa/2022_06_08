@@ -33,6 +33,9 @@ public:
 
 	//攻撃
 	void Attack();
+
+	//ワールドトランスフォームを取得
+	WorldTransform GetWorldtransform() { return worldTransform_; }
 private:
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;

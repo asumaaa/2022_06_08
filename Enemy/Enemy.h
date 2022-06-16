@@ -15,8 +15,7 @@
 #include "DebugText.h"
 #include "Input.h"
 #include "EnemyBullet.h"
-
-class Player;
+#include "Player.h"
 
 class Enemy
 {
@@ -32,8 +31,13 @@ public:
 	void Leave();
 
 	//攻撃の関数
+	//攻撃初期化
 	void Attack();
+	//攻撃更新
 	void AttackUpdate();
+
+	//ワールドトランスフォームを取得
+	WorldTransform GetWorldtransform() { return worldTransform_; }
 
 	//プレイヤーのセッター
 	void SetPlayer(Player* player) { player_ = player; }

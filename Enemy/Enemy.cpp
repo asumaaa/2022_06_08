@@ -50,7 +50,6 @@ void Enemy::Move()
 		break;
 	}
 
-	roll = { 0,0.02f,0 };
 	worldTransform_.translation_ += move;
 	worldTransform_.rotation_ += roll;
 }
@@ -74,6 +73,13 @@ void Enemy::MoveApproach()
 
 void Enemy::Leave()
 {
+	bulletTimer--;
+	//一定間隔で弾を発射
+	if (bulletTimer == 0)
+	{
+		Attack();
+		bulletTimer = kAttackInterval;
+	}
 	move = { 0,0,-speed };
 	//規定の位置に達したら離脱
 	if (worldTransform_.translation_.z <= -20.0f)
@@ -84,9 +90,12 @@ void Enemy::Leave()
 
 void Enemy::Attack()
 {
-	assert(player_);
+	assert(player_);;
 
-	Vector3 velocity(0, 0, kBulletSpeed);
+	//速度のベクトル
+	Vector3 velocity(VecGetX(player_->GetWorldtransform(), GetWorldtransform()) * kBulletSpeed,
+		VecGetY(player_->GetWorldtransform(), GetWorldtransform()) * kBulletSpeed,
+		VecGetZ(player_->GetWorldtransform(), GetWorldtransform()) * kBulletSpeed);
 
 	//速度ベクトルを自機の向きに併せて回転させる
 	worldTransformRoll(&velocity, &worldTransform_);
