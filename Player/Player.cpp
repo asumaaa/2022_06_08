@@ -1,11 +1,10 @@
 #include "Player.h"
 #define PI 3.1415
 
-void Player::Initialize(Model* model, ViewProjection viewProjection)
+void Player::Initialize(Model* model)
 {
 	assert(model);
 	this->model_ = model;
-	this->viewProjection_ = viewProjection;
 
 	textureHandle_ = TextureManager::Load("texture.jpg");
 
@@ -17,13 +16,14 @@ void Player::Initialize(Model* model, ViewProjection viewProjection)
 	worldTransform_.Initialize();
 }
 
-void Player::Update()
+void Player::Update(ViewProjection viewProjection)
 {
+	this->viewProjection_ = viewProjection;
 
 	Move();
 	Rotation();
 
-	Attack();
+	/*Attack();*/
 
 	worldTransformUpdate(&worldTransform_);
 

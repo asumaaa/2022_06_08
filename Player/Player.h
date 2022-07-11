@@ -22,8 +22,8 @@ class Player
 {
 
 public:
-	void Initialize(Model* model,  ViewProjection viewProjection);
-	void Update();
+	void Initialize(Model* model);
+	void Update(ViewProjection viewProjection);
 	void Draw();
 
 	//ˆÚ“®

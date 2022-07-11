@@ -55,7 +55,7 @@ private: // メンバ変数
 	Player* player_;
 
 	//敵
-	Enemy* enemy_;
+	/*Enemy* enemy_;*/
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
@@ -64,7 +64,9 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 
 	//ビュープロジェクション
-	ViewProjection viewProjection_;
+	ViewProjection viewProjection_[3];
+	ViewProjection viewProjection_2;	//保存用変数
+	int viewNum = 0;
 
 	//視点の移動ベクトル
 	Vector3 moveEye = { 0,0,0 };

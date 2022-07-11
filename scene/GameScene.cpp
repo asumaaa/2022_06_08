@@ -14,7 +14,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene()
 {
 	delete player_;
-	delete enemy_;
+	/*delete enemy_;*/
 	delete model_;
 }
 
@@ -28,23 +28,42 @@ void GameScene::Initialize() {
 	//3Dモデルの生成
 	model_ = Model::Create();
 
+	//乱数シェード生成
+	std::random_device seed_gen;
+	//メルセンヌツイスター
+	std::mt19937_64 engine(seed_gen());
+	//乱数範囲
+	std::uniform_real_distribution<float>posDist(-10.0f, 10.0f);
+
 	//ビュープロジェクション
-	viewProjection_.Initialize();
+	for (int i = 0; i < 3; i++)
+	{
+		viewProjection_[i].target = { 0.0f,0.0f,0.0f };
+		viewProjection_[i].eye = {posDist(engine),posDist(engine),posDist(engine) };
+		viewProjection_[i].Initialize();
+	}
+	viewProjection_2 = viewProjection_[0];
 
 	//初期化
 	player_ = new Player();
-	player_->Initialize(model_,viewProjection_);
-	enemy_ = new Enemy();
-	enemy_->Initialize(model_,viewProjection_);
-
-	//敵に自キャラのアドレスを渡す
-	enemy_->SetPlayer(player_);
+	player_->Initialize(model_);
 }
 
 void GameScene::Update()
 {
-	player_->Update();
-	enemy_->Update();
+	if (input_->TriggerKey(DIK_SPACE))
+	{
+		if (viewNum != 2)
+		{
+			viewNum++;
+		}
+		else
+		{
+			viewNum = 0;
+		}
+		viewProjection_2 = viewProjection_[viewNum];
+	}
+	player_->Update(viewProjection_2);
 }
 
 void GameScene::Draw() {
@@ -77,7 +96,7 @@ void GameScene::Draw() {
 	//3Dモデル描画
 	//自キャラの描画
 	player_->Draw();
-	enemy_->Draw();
+	//enemy_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
