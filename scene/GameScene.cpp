@@ -13,8 +13,11 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene()
 {
-	delete player_;
-	delete enemy_;
+	for (int i = 0; i < 10; i++)
+	{
+		delete player_[i];
+	}
+	/*delete enemy_;*/
 	delete model_;
 }
 
@@ -32,19 +35,34 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	//初期化
-	player_ = new Player();
-	player_->Initialize(model_,viewProjection_);
-	enemy_ = new Enemy();
-	enemy_->Initialize(model_,viewProjection_);
+	for (int i = 0; i < 10; i++)
+	{
+		player_[i] = new Player();
+		player_[i]->Initialize(model_, viewProjection_);
+	}
+	
+	float addAngle = 0.2 * PI;
 
-	//敵に自キャラのアドレスを渡す
-	enemy_->SetPlayer(player_);
+	//角度をずらす
+	for (int i = 0; i < 10; i++)
+	{
+		addMove[i] = { i * addAngle,i * addAngle,0.0f };
+	}
 }
 
 void GameScene::Update()
 {
-	player_->Update();
-	enemy_->Update();
+	for (int i = 0; i < 10; i++)
+	{
+		addMove[i].x += 0.02;
+		addMove[i].y += 0.02;
+		player_[i]->worldTransform_.translation_ = {cos(addMove[i].x) * 10, sin(addMove[i].y) * 10,0};
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		player_[i]->Update();
+	}
+	/*enemy_->Update();*/
 }
 
 void GameScene::Draw() {
@@ -76,8 +94,11 @@ void GameScene::Draw() {
 
 	//3Dモデル描画
 	//自キャラの描画
-	player_->Draw();
-	enemy_->Draw();
+	for (int i = 0; i < 10; i++)
+	{
+		player_[i]->Draw();
+	}
+	/*enemy_->Draw();*/
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

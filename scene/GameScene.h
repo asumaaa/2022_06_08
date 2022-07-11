@@ -52,10 +52,12 @@ private: // メンバ変数
 	DebugText* debugText_ = nullptr;
 
 	//自キャラ
-	Player* player_;
+	Player* player_[10];
+	//移動配列
+	Vector3 addMove[10];
 
 	//敵
-	Enemy* enemy_;
+	/*Enemy* enemy_;*/
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;

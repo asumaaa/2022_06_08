@@ -39,14 +39,12 @@ public:
 private:
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;
-	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
 	ViewProjection viewProjection_;
 
 	//移動
 	float speed = 0.2;
-	Vector3 move;
 	//回転
 	float rollSpeed = 0.02;
 	Vector3 roll;
@@ -54,5 +52,11 @@ private:
 	//弾
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 	float kBulletSpeed = 1.0f;
+
+public:
+	//親オブジェクト
+	Player* parent = nullptr;
+	WorldTransform worldTransform_;
+	Vector3 move;
 };
 

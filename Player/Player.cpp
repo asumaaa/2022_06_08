@@ -19,6 +19,11 @@ void Player::Initialize(Model* model, ViewProjection viewProjection)
 
 void Player::Update()
 {
+	////親オブジェクトがあれば
+	//if (parent != nullptr)
+	//{
+	//	parent->matWorld *= object->parent->matWorld;
+	//}
 
 	Move();
 	Rotation();
@@ -45,7 +50,7 @@ void Player::Draw()
 
 void Player::Move()
 {
-	if (input_->PushKey(DIK_A))
+	/*if (input_->PushKey(DIK_A))
 	{
 		move = {-speed,0.0f,0.0f};
 	}
@@ -64,7 +69,7 @@ void Player::Move()
 	else
 	{
 		move = { 0.0f,0.0f,0.0f };
-	}
+	}*/
 
 	//移動限界座標
 	const float kMoveLimitX = 36;
