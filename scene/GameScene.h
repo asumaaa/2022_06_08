@@ -66,6 +66,9 @@ private: // メンバ変数
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 	int viewNum = 0;
+	float eyeSpeed = 0.5;
+	float x, y;
+	bool eyeMove = true;
 
 	//視点の移動ベクトル
 	Vector3 moveEye = { 0,0,0 };

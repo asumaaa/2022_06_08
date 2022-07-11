@@ -45,13 +45,20 @@ void GameScene::Initialize() {
 		player_[i]->Initialize(model_);
 		player_[i]->worldTransform_.translation_ = { posDist(engine),posDist(engine),0};
 	}
+
+	//プレイヤー0の位置でビュー座標を初期化
+	viewProjection_.eye = { player_[0]->worldTransform_.translation_.x,player_[0]->worldTransform_.translation_.y,-50 };
+
+	viewProjection_.target = { player_[0]->worldTransform_.translation_.x,player_[0]->worldTransform_.translation_.y,
+	player_[0]->worldTransform_.translation_.z};
 }
 
 void GameScene::Update()
 {
 	//スペースキーを押すごとに注視点を変更
-	if (input_->TriggerKey(DIK_SPACE))
+	if (input_->TriggerKey(DIK_SPACE) && eyeMove == true)
 	{
+		eyeMove = false;
 		if (viewNum != 4)
 		{
 			viewNum++;
@@ -61,11 +68,26 @@ void GameScene::Update()
 			viewNum = 0;
 		}
 	}
-	//注視点変更
-	viewProjection_.target = { player_[viewNum]->worldTransform_.translation_.x,player_[viewNum]->worldTransform_.translation_.y,
-	player_[viewNum]->worldTransform_.translation_.z };
+
 	//ビュー座標をオブジェクトの目の前に
-	viewProjection_.eye = { player_[viewNum]->worldTransform_.translation_.x,player_[viewNum]->worldTransform_.translation_.y,-50 };
+	if (viewProjection_.eye.x - player_[viewNum]->worldTransform_.translation_.x >= 0.3 ||
+		viewProjection_.eye.x - player_[viewNum]->worldTransform_.translation_.x <= -0.3)
+	{
+		if (viewNum != 0)
+		{
+			x = VecGetX(player_[viewNum]->worldTransform_, player_[viewNum - 1]->worldTransform_);
+			y = VecGetY(player_[viewNum]->worldTransform_, player_[viewNum - 1]->worldTransform_);
+		}
+		else
+		{
+			x = VecGetX(player_[0]->worldTransform_, player_[4]->worldTransform_);
+			y = VecGetY(player_[0]->worldTransform_, player_[4]->worldTransform_);
+		}
+
+	viewProjection_.eye += { x* eyeSpeed, y* eyeSpeed, 0 };
+	viewProjection_.target += { x * eyeSpeed,y * eyeSpeed,0 };
+	}
+	else { eyeMove = true; }
 
 	viewProjection_.Initialize();
 
