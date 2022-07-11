@@ -28,22 +28,6 @@ void GameScene::Initialize() {
 	//3Dモデルの生成
 	model_ = Model::Create();
 
-	//乱数シェード生成
-	std::random_device seed_gen;
-	//メルセンヌツイスター
-	std::mt19937_64 engine(seed_gen());
-	//乱数範囲
-	std::uniform_real_distribution<float>posDist(-10.0f, 10.0f);
-
-	//ビュープロジェクション
-	for (int i = 0; i < 3; i++)
-	{
-		viewProjection_[i].target = { 0.0f,0.0f,0.0f };
-		viewProjection_[i].eye = {posDist(engine),posDist(engine),posDist(engine) };
-		viewProjection_[i].Initialize();
-	}
-	viewProjection_2 = viewProjection_[0];
-
 	//初期化
 	player_ = new Player();
 	player_->Initialize(model_);
@@ -51,19 +35,20 @@ void GameScene::Initialize() {
 
 void GameScene::Update()
 {
-	if (input_->TriggerKey(DIK_SPACE))
+	//カメラを移動
+	if (input_->PushKey(DIK_A))
 	{
-		if (viewNum != 2)
-		{
-			viewNum++;
-		}
-		else
-		{
-			viewNum = 0;
-		}
-		viewProjection_2 = viewProjection_[viewNum];
+		addAngle += 0.02;
 	}
-	player_->Update(viewProjection_2);
+	if (input_->PushKey(DIK_D))
+	{
+		addAngle -= 0.02;
+	}
+	viewProjection_.target = { 0.0f,0.0f,0.0f };
+	viewProjection_.eye = { cos(addAngle) * 10,0.0f,sin(addAngle) * 10};
+	viewProjection_.Initialize();
+
+	player_->Update(viewProjection_);
 }
 
 void GameScene::Draw() {

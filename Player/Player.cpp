@@ -20,7 +20,7 @@ void Player::Update(ViewProjection viewProjection)
 {
 	this->viewProjection_ = viewProjection;
 
-	Move();
+	/*Move();*/
 	Rotation();
 
 	/*Attack();*/

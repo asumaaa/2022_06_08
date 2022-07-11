@@ -64,9 +64,8 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 
 	//ビュープロジェクション
-	ViewProjection viewProjection_[3];
-	ViewProjection viewProjection_2;	//保存用変数
-	int viewNum = 0;
+	ViewProjection viewProjection_;
+	float addAngle = 0.3;
 
 	//視点の移動ベクトル
 	Vector3 moveEye = { 0,0,0 };
