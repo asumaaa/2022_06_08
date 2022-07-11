@@ -63,7 +63,7 @@ void Player::Move()
 	}
 	else
 	{
-		move = { 0.0f,0.0f,0.0f };
+		move = { 0.1f,0.0f,0.0f };
 	}
 
 	//ˆÚ“®ŒÀŠEÀ•W
