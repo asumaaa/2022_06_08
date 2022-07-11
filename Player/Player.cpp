@@ -7,7 +7,7 @@ void Player::Initialize(Model* model, ViewProjection viewProjection)
 	this->model_ = model;
 	this->viewProjection_ = viewProjection;
 
-	textureHandle_ = TextureManager::Load("Mario.jpg");
+	textureHandle_ = TextureManager::Load("texture.jpg");
 
 	//シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
@@ -63,7 +63,7 @@ void Player::Move()
 	}
 	else
 	{
-		move = { 0.1f,0.0f,0.0f };
+		move = { 0.0f,0.0f,0.0f };
 	}
 
 	//移動限界座標
