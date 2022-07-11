@@ -39,7 +39,6 @@ public:
 private:
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;
-	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	uint32_t textureHandle_;
 	ViewProjection viewProjection_;
@@ -54,5 +53,8 @@ private:
 	//’e
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 	float kBulletSpeed = 1.0f;
+
+public:
+	WorldTransform worldTransform_;
 };
 

@@ -52,7 +52,7 @@ private: // メンバ変数
 	DebugText* debugText_ = nullptr;
 
 	//自キャラ
-	Player* player_;
+	Player* player_[5];
 
 	//敵
 	/*Enemy* enemy_;*/
@@ -64,8 +64,7 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 
 	//ビュープロジェクション
-	ViewProjection viewProjection_[3];
-	ViewProjection viewProjection_2;	//保存用変数
+	ViewProjection viewProjection_;
 	int viewNum = 0;
 
 	//視点の移動ベクトル
